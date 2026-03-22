@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FA"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imgCircuito"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/circuito1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardInputs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/imgCircuito"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <GridLayout
+            android:id="@+id/gridResistencias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <EditText android:id="@+id/etR1" android:layout_width="70dp" android:layout_height="wrap_content" android:hint="R1" android:inputType="numberDecimal" android:textSize="14sp" android:textAlignment="center"/>
+            <EditText android:id="@+id/etR4" android:layout_width="70dp" android:layout_height="wrap_content" android:hint="R4" android:inputType="numberDecimal" android:textSize="14sp" android:textAlignment="center"/>
+            <EditText android:id="@+id/etR2" android:layout_width="70dp" android:layout_height="wrap_content" android:hint="R2" android:inputType="numberDecimal" android:textSize="14sp" android:textAlignment="center"/>
+            <EditText android:id="@+id/etR5" android:layout_width="70dp" android:layout_height="wrap_content" android:hint="R5" android:inputType="numberDecimal" android:textSize="14sp" android:textAlignment="center"/>
+            <EditText android:id="@+id/etR3" android:layout_width="70dp" android:layout_height="wrap_content" android:hint="R3" android:inputType="numberDecimal" android:textSize="14sp" android:textAlignment="center"/>
+            <EditText android:id="@+id/etR6" android:layout_width="70dp" android:layout_height="wrap_content" android:hint="R6" android:inputType="numberDecimal" android:textSize="14sp" android:textAlignment="center"/>
+        </GridLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/gridResistencias"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <EditText
+                android:id="@+id/etVoltaje"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Voltaje (V)"
+                android:textAlignment="center"
+                android:inputType="numberDecimal"
+                android:textColor="#2196F3"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+                <Button
+                    android:id="@+id/btnAnterior"
+                    android:backgroundTint="@color/gray"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="←" />
+
+                <Button
+                    android:id="@+id/btnSiguiente"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:text="→"
+                    android:backgroundTint="#2196F3"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvExplicacion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp"
+        android:text="Aquí aparecerá el procedimiento paso a paso..."
+        android:textColor="#444444"
+        android:textSize="15sp"
+        android:typeface="monospace"
+        android:lineSpacingExtra="4sp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/cardInputs"
+        app:layout_constraintBottom_toTopOf="@id/layoutResultado"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutResultado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvResultado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Res: 0.00 Ω"
+            android:textColor="#2E7D32"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnReset" />
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
