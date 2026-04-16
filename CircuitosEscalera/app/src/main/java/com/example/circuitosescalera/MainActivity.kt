@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         val rD = (r2 * rC) / (r2 + rC)
         val rEq = r1 + rD
         val iT = vT / rEq
+        val pTotal = vT * iT
 
         // 4. ANÁLISIS DE VOLTAJES Y CORRIENTES
         val vR1 = iT * r1
@@ -131,6 +132,9 @@ class MainActivity : AppCompatActivity() {
         imagenesPasos.add(R.drawable.circuito1)
 
         pasosProcedimiento.add("ANÁLISIS R6\nI6 = I5 = ${"%.3f".format(iR56)}A\nV6 = I6 * R6 = ${"%.2f".format(vR6)}V\nP6 = V6 * I6 = ${"%.2f".format(vR6 * iR56)}W")
+        imagenesPasos.add(R.drawable.circuito1)
+
+        pasosProcedimiento.add("POTENCIA TOTAL\nP = Vt * It = ${"%.2f".format(vT)} * ${"%.3f".format(iT)} = ${"%.2f".format(pTotal)} W")
         imagenesPasos.add(R.drawable.circuito1)
 
         pasoActual = 0
