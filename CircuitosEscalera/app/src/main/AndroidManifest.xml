@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CircuitosEscalera">
         <activity
+            android:name=".ResultadosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".creador"
+            android:exported="false" />
+        <activity
+            android:name=".contacto"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
