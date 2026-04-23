@@ -24,12 +24,10 @@ class ResultadosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resultados)
 
-        // Configurar Toolbar
         val toolbar: Toolbar = findViewById(R.id.my_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Vincular componentes
         imgCircuitoRes = findViewById(R.id.imgCircuitoRes)
         tvExplicacion = findViewById(R.id.tvExplicacion)
         tvResultado = findViewById(R.id.tvResultado)
@@ -37,7 +35,6 @@ class ResultadosActivity : AppCompatActivity() {
         val btnSiguiente = findViewById<Button>(R.id.btnSiguiente)
         val btnReset = findViewById<Button>(R.id.btnReset)
 
-        // 1. RECUPERAR DATOS DEL MAIN
         val r1 = intent.getDoubleExtra("R1", 0.0)
         val r2 = intent.getDoubleExtra("R2", 0.0)
         val r3 = intent.getDoubleExtra("R3", 0.0)
@@ -46,7 +43,6 @@ class ResultadosActivity : AppCompatActivity() {
         val r6 = intent.getDoubleExtra("R6", 0.0)
         val vT = intent.getDoubleExtra("VT", 0.0)
 
-        // 2. REALIZAR TODOS LOS CÁLCULOS (Tu lógica original completa)
         val rA = r5 + r6
         val rB = (r4 * rA) / (r4 + rA)
         val rC = rB + r3
@@ -55,7 +51,6 @@ class ResultadosActivity : AppCompatActivity() {
         val iT = vT / rEq
         val pTotal = vT * iT
 
-        // Análisis de voltajes y corrientes
         val vR1 = iT * r1
         val vD = vT - vR1
         val iR2 = vD / r2
@@ -67,15 +62,12 @@ class ResultadosActivity : AppCompatActivity() {
         val vR5 = iR56 * r5
         val vR6 = iR56 * r6
 
-        // 3. GENERAR PASOS (Recuperando lo que "me comí" + Potencia Total)
         pasosProcedimiento.clear()
         imagenesPasos.clear()
 
-        // Paso 0: Inicio
         pasosProcedimiento.add("INICIO\nDatos ingresados:\nVoltaje: $vT V\nResistencias: R1=$r1, R2=$r2, R3=$r3, R4=$r4, R5=$r5, R6=$r6")
         imagenesPasos.add(R.drawable.circuito1)
 
-        // Reducciones
         pasosProcedimiento.add("PASO 1: Reducción Serie (R5+R6)\nRa = ${"%.1f".format(r5)} + ${"%.1f".format(r6)} = ${"%.2f".format(rA)} Ω")
         imagenesPasos.add(R.drawable.circuito2)
 
@@ -91,7 +83,6 @@ class ResultadosActivity : AppCompatActivity() {
         pasosProcedimiento.add("RESISTENCIA TOTAL\nReq = R1 + Rd\nReq = ${"%.1f".format(r1)} + ${"%.2f".format(rD)} = ${"%.2f".format(rEq)} Ω\n\nIt = V / Req = ${"%.3f".format(iT)} A")
         imagenesPasos.add(R.drawable.circuito6)
 
-        // Análisis individual (Lo que ya tenías)
         pasosProcedimiento.add("ANÁLISIS R1\nV1 = It * R1 = ${"%.2f".format(vR1)}V\nI1 = It = ${"%.3f".format(iT)}A\nP1 = V1 * I1 = ${"%.2f".format(vR1 * iT)}W")
         imagenesPasos.add(R.drawable.circuito1)
 
@@ -110,43 +101,37 @@ class ResultadosActivity : AppCompatActivity() {
         pasosProcedimiento.add("ANÁLISIS R6\nI6 = I5 = ${"%.3f".format(iR56)}A\nV6 = I6 * R6 = ${"%.2f".format(vR6)}V\nP6 = V6 * I6 = ${"%.2f".format(vR6 * iR56)}W")
         imagenesPasos.add(R.drawable.circuito1)
 
-        // Paso Final: Potencia Total (EL NUEVO)
         pasosProcedimiento.add("POTENCIA TOTAL DEL SISTEMA\nPt = Vt * It\nPt = ${"%.1f".format(vT)}V * ${"%.3f".format(iT)}A\nPt = ${"%.2f".format(pTotal)} W")
         imagenesPasos.add(R.drawable.circuito1)
 
-        // 4. MOSTRAR RESULTADO INICIAL
         mostrarPaso()
         tvResultado.text = "Req: ${"%.2f".format(rEq)} Ω"
 
-        // Botones
         btnSiguiente.setOnClickListener { avanzarPaso() }
         btnAnterior.setOnClickListener { retrocederPaso() }
         btnReset.setOnClickListener { finish() }
     }
 
-    // 1. Este método "infla" (muestra) el menú en la Toolbar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
-    // 2. Este método maneja qué pasa cuando tocas una opción
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.activity_main -> {
-                // Si ya estamos en Main, no hacemos nada, si no, vamos allá
-                if (this !is MainActivity) {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                }
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
                 true
             }
             R.id.activity_creador -> {
                 startActivity(Intent(this, creador::class.java))
+                finish()
                 true
             }
             R.id.activity_contacto -> {
                 startActivity(Intent(this, contacto::class.java))
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -156,8 +141,11 @@ class ResultadosActivity : AppCompatActivity() {
     private fun mostrarPaso() {
         tvExplicacion.text = pasosProcedimiento[pasoActual]
         imgCircuitoRes.setImageResource(imagenesPasos[pasoActual])
-        // Ajuste de tamaño de texto dinámico
-        tvExplicacion.textSize = if (pasosProcedimiento[pasoActual].length > 160) 14f else 16f
+        if (pasosProcedimiento[pasoActual].length > 150) {
+            tvExplicacion.textSize = 14f
+        } else {
+            tvExplicacion.textSize = 18f
+        }
     }
 
     private fun avanzarPaso() {
